@@ -15,5 +15,15 @@ stage('Maven package'){
 
  sh "${mvn} clean package"
 }
-  
+  stage('Deploy -to Dev'){
+     //remane the war file
+     sh 'mv target/myweb*.war target/myweb.war'
+     sshagent(['tomcat-dev']) {
+    
+}
+     //stop the tomcat server
+     //remove the old war file on tomcat
+     //copy new war file on tomcat
+     //strt tomcat
+  }
 }
