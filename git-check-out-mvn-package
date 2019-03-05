@@ -5,8 +5,12 @@ node{
        url: 'https://github.com/Nirimakhi/my-app-1',
        branch: 'master'
    }
-}
+
 stage('Maven package'){
- sh label: '', script: 'mvn clean package'
+ def mvnHome = tool name: 'maven3', type: 'maven'
+//"${mvnHome}/bin/mvn" - complete path of maven where maven is installed
+ def mvn ="${mvnHome}/bin/mvn"
+ sh "${mvn} clean package"
 }
   
+}
