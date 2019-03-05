@@ -10,6 +10,9 @@ stage('Maven package'){
  def mvnHome = tool name: 'maven3', type: 'maven'
 //"${mvnHome}/bin/mvn" - complete path of maven where maven is installed
  def mvn ="${mvnHome}/bin/mvn"
+ 
+//"${mvnHome} - string interpollation
+
  sh "${mvn} clean package"
 }
   
