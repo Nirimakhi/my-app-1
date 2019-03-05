@@ -1,5 +1,6 @@
 node{
    stage('SCM Checkout'){
-     git 'https://github.com/Nirimakhi/my-app-1'
+    git credentialsId: 'git-Credentials', url: 'https://github.com/Nirimakhi/my-app-1',branch: 'master'
    }
+}
   
