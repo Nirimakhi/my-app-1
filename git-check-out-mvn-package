@@ -27,7 +27,7 @@ stage('Maven package'){
    def webApps = "/opt/tomcat8/webapps/"
    
    //Stop tomcat 
-	 sh "ssh -o StrictHostKeyChecking=no ${stopTomcat}"
+	 sh "ssh ${stopTomcat}"
 	
    //Remove old war file on tomcat
 	 sh "ssh ec2-user@172.31.11.19 rm /opt/tomcat8/webapps/myweb*"
