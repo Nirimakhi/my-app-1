@@ -40,4 +40,10 @@ stage('Maven package'){
 	
   }
 }
+
+stage('Email Notification'){
+mail bcc: '', body: '''Hi
+Welcome to Jenkins pipleline script for Email Notification
+Thank you!''', cc: '', from: '', replyTo: '', subject: 'Jenkins jobs', to: 'niraa.tiit@gmail.com'
+}
 }
