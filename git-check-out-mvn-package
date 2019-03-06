@@ -30,10 +30,10 @@ stage('Maven package'){
 	 sh "ssh -o StrictHostKeyChecking=no ${stopTomcat}"
 	
    //Remove old war file on tomcat
-	 sh "ssh ec2-user@172.31.11.19 rm /opt/tomcat8/webapp/myweb*"
+	 sh "ssh ec2-user@172.31.11.19 rm /opt/tomcat8/webapps/myweb*"
 	
    //copy new war file 
-	  sh "ssh target/myweb.war ${tomcatUser}@${tomcatIp}/webApps"
+	  sh "ssh target/myweb.war ${tomcatUser}@${tomcatIp}/${webApps}"
 	
    //start tomcat
 	 sh " ssh ${startTomcat}"
