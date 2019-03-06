@@ -15,21 +15,29 @@ stage('Maven package'){
 
  sh "${mvn} clean package"
 }
-   stage('Deploy -to Dev'){
-     //remane the war file
-     sh 'mv target/myweb*.war target/myweb.war'
-     sshagent(['tomcat-dev']) {
-     
-     //stop the tomcat server
-     ssh -o StrictHostKeyChecking=no ec2-user@172.31.11.19 /opt/tomcat8/bin/shutdown.sh
-     
-     //remove the old war file on tomcat
-     ssh ec2-user@172.31.11.19 rm /opt/tomcat8/webapp/myweb*war
-     
-     //copy new war file on tomcat
-     scp target/myweb.war ec2-user@172.31.11.19:/opt/tomca8/webapps/
-     
-     //strt tomcat
-     ssh ec2-user@172.31.11.19 /opt/tomcat8/bin/startup.sh
-} }
+   stage('Deploy-to-dev'){
+ //rename the warfile
+ sh 'mv target/myweb*war target/myweb.war'
+ 
+  sshagent(['tomcat-dev']){
+   def tomcatIp = '172.31.11.19'
+   def tomcatUser = 'ec2-user'
+   def stopTomcat = "${tomcatUser}@${tomcatIp} /opt/tomcat8/bin/shutdown.sh"
+   def startTomcat = "${tomcatUser}@${tomcatIp} /opt/tomcat8/bin/startup.sh"
+   def webApps = "/opt/tomcat8/webapps/"
+   
+   //Stop tomcat 
+	 sh "ssh -o StrictHostKeyChecking=no ${stopTomcat}"
+	
+   //Remove old war file on tomcat
+	 sh "ssh ec2-user@172.31.11.19 rm /opt/tomcat8/webapp/myweb*"
+	
+   //copy new war file 
+	  sh "ssh target/myweb.war ${tomcatUser}@${tomcatIp}/webApps"
+	
+   //start tomcat
+	 sh " ssh ${startTomcat}"
+	
+  }
+}
 }
