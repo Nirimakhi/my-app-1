@@ -46,4 +46,11 @@ mail bcc: '', body: '''Hi
 Welcome to Jenkins pipleline script for Email Notification
 Thank you!''', cc: '', from: '', replyTo: '', subject: 'Jenkins jobs', to: 'niraa.tiit@gmail.com'
 }
+stage('Slack-Notification'){
+slackSend baseUrl: 'https://hooks.slack.com/services/', 
+channel: ' pipleline-slack', 
+color: 'good', message: 'Welcome to Jenkins,Slack!',
+teamDomain: 'IBM', 
+tokenCredentialId: 'Slack-Demo'
+}
 }
