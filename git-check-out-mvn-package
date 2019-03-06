@@ -24,16 +24,16 @@ stage('Maven package'){
    def tomcatUser = 'ec2-user'
    def stopTomcat = "${tomcatUser}@${tomcatIp} /opt/tomcat8/bin/shutdown.sh"
    def startTomcat = "${tomcatUser}@${tomcatIp} /opt/tomcat8/bin/startup.sh"
-   def webApps = "/opt/tomcat8/webapps/"
+   def copyWar = "scp -o StrictHostKeyChecking=no target/myweb.war ${tomcatUser}@${tomcatIp}:/opt/tomcat8/webapps/"
    
    //Stop tomcat 
 	 sh "ssh ${stopTomcat}"
 	
    //Remove old war file on tomcat
-	 sh "ssh ec2-user@172.31.11.19 rm /opt/tomcat8/webapps/myweb*"
+	 sh "ssh ec2-user@172.31.11.19 rm -rf /opt/tomcat8/webapps/myweb*"
 	
    //copy new war file 
-	  sh "scp target/myweb.war ${tomcatUser}@${tomcatIp}: ${webApps}"
+	  sh "${copyWar}"
 	
    //start tomcat
 	 sh " ssh ${startTomcat}"
