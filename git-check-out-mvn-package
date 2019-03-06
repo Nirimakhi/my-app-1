@@ -33,7 +33,7 @@ stage('Maven package'){
 	 sh "ssh ec2-user@172.31.11.19 rm -rf /opt/tomcat8/webapps/myweb*"
 	
    //copy new war file 
-	  sh "scp target/myweb.war ${tomcatUser}@${tomcatIp}/${webApps}"
+	  sh "scp target/myweb.war ${tomcatUser}@${tomcatIp}: ${webApps}"
 	
    //start tomcat
 	 sh " ssh ${startTomcat}"
