@@ -30,7 +30,7 @@ stage('Maven package'){
 	 sh "ssh ${stopTomcat}"
 	
    //Remove old war file on tomcat
-	 sh "ssh ec2-user@172.31.11.19 rm /opt/tomcat8/webapps/myweb*"
+	 sh "ssh ec2-user@172.31.11.19 rm /opt/tomcat8/webapps/myweb*.war"
 	
    //copy new war file 
 	  sh "scp target/myweb.war ${tomcatUser}@${tomcatIp}/${webApps}"
